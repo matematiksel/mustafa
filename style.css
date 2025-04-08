@@ -1,0 +1,168 @@
+/* Genel Resetleme ve Temel Ayarlar */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa; /* Açık gri arka plan */
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+/* Gezinti Menüsü (Navbar) */
+.navbar {
+    background: #343a40; /* Koyu gri */
+    color: #fff;
+    padding: 1rem 0;
+    position: fixed; /* Sabit menü */
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Diğer öğelerin üzerinde kalması için */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar .logo {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.navbar .nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.navbar .nav-links li {
+    margin-left: 20px;
+}
+
+.navbar .nav-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links a:hover {
+    color: #adb5bd; /* Hover rengi */
+}
+
+/* Ana Başlık / Giriş (Hero) Bölümü */
+.hero {
+    background: linear-gradient(rgba(52, 58, 64, 0.7), rgba(52, 58, 64, 0.7)), url('background.jpg') no-repeat center center/cover; /* Arka plan resmi eklenebilir */
+    background-color: #495057; /* Resim yoksa veya yüklenmezse */
+    color: #fff;
+    padding: 100px 0; /* Menü için boşluk bırak */
+    text-align: center;
+    min-height: 60vh; /* Ekran yüksekliğinin bir kısmını kapla */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero .lead {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn {
+    display: inline-block;
+    background: #007bff; /* Mavi tonu */
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background: #0056b3; /* Koyu mavi */
+}
+
+/* Bölümler (Sections) */
+.section {
+    padding: 60px 0;
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #343a40;
+}
+
+.bg-light {
+    background-color: #fff; /* Açık bölümler için beyaz arka plan */
+}
+
+/* Listeler */
+.section ul {
+    list-style: disc; /* Madde işareti */
+    margin-left: 40px; /* İçeri itme */
+}
+
+.section ul li {
+    margin-bottom: 10px;
+}
+
+/* Linkler */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* Alt Bilgi (Footer) */
+.footer {
+    background: #343a40;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+/* Duyarlılık (Responsive) - Basit Örnek */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+    }
+    .navbar .nav-links {
+        margin-top: 10px;
+        flex-direction: column;
+        align-items: center;
+    }
+    .navbar .nav-links li {
+        margin: 5px 0;
+    }
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+}
