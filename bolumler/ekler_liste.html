@@ -27,21 +27,23 @@
         }
         .appendix-list li {
             margin-bottom: 12px;
-            padding-left: 50px; /* Ek No için daha fazla yer */
+            padding-left: 65px; /* <<< DEĞİŞİKLİK: Sol boşluğu artırdık */
             position: relative;
             line-height: 1.5;
             text-align: justify;
         }
         .appendix-list li::before {
-            content: attr(data-ek-no); /* Ek Numarasını göster */
+            content: attr(data-ek-no);
             position: absolute;
             left: 0;
-            top: 0;
+            top: 0; /* Dikey hizalamayı tam başa alalım */
             font-weight: bold;
             color: #0056b3;
-            width: 40px; /* Genişlik */
+            width: 50px; /* <<< DEĞİŞİKLİK: Genişliği biraz artırdık */
             text-align: right;
-            padding-right: 10px;
+            padding-right: 10px; /* Sağdaki boşluk */
+            /* Dikey hizalama için ek ayar (gerekirse): */
+            /* line-height: 1.5; */ /* Ana li ile aynı yaparak hizalamayı deneyebiliriz */
         }
 
         .navigation-links {
