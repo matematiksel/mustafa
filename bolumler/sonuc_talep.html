@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bölüm 10: Sonuç ve Talep</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Bölüm sayfaları için ortak stiller */
+        .petition-section {
+            background-color: #fff;
+            padding: 40px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .petition-section h2 {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #343a40;
+        }
+        /* Talep listesi stili */
+        .request-list {
+            list-style-type: none;
+            padding-left: 0;
+            counter-reset: request-counter;
+        }
+        .request-list li {
+            counter-increment: request-counter;
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative;
+             text-align: justify;
+        }
+        .request-list li::before {
+            content: counter(request-counter) ".";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            color: #0056b3;
+            width: 25px;
+            text-align: right;
+            padding-right: 10px;
+        }
+         .request-list strong { /* Taleplerdeki vurgular */
+             color: #dc3545; /* Dikkat çekici renk */
+         }
+
+        .navigation-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navigation-links a {
+            margin: 0 5px;
+        }
+         /* İmza Alanı Stili */
+         .signature-section {
+             margin-top: 40px;
+             text-align: right;
+             font-weight: bold;
+         }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index2.html" class="logo">Dilekçe Geliştirme</a>
+            <ul class="nav-links">
+                 <li><a href="../index2.html#giris">Giriş</a></li>
+                 <li><a href="../index2.html#zorluklar">Zorluklar</a></li>
+                 <li><a href="../index2.html#amacimiz">Amacımız</a></li>
+                 <li><a href="../index2.html#ana-odak">Ana Odak</a></li>
+                 <li><a href="../index2.html#referans-metin">Referans Metin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 80px;"> <article class="petition-section">
+            <h2>10. SONUÇ VE TALEP</h2>
+
+            <p>Yukarıda ayrıntılı olarak açıklanan ve dosyada mevcut somut delillerle desteklenen haklı istinaf nedenlerimiz ve Sayın Mahkemenizce re'sen dikkate alınacak diğer hususlar çerçevesinde;</p>
+
+            <ol class="request-list">
+                <li>
+                    <strong>ÖNCELİKLE,</strong> Kayseri 1. Asliye Ticaret Mahkemesi'nin 20/02/2025 tarihli, 2024/405 E. ve 2025/164 K. sayılı kararının, özellikle <strong>üç (3) adet üyeliğimizin reddine ilişkin kısmının,</strong> HMK m. 353/1-a-6 uyarınca esasa, usule ve hukuka ilişkin bariz isabetsizlikler içerdiği ve <strong>yeterli gerekçeden yoksun olduğu</strong> anlaşıldığından <strong>İSTİNAF İNCELEMESİ SONUCUNDA KALDIRILMASINA,</strong>
+                </li>
+                <li>
+                    Davamızın <strong>KABULÜ</strong> ile tarafımızın S.S. Camikebir Toplu İşyeri Yapı Kooperatifi nezdindeki <strong>üç (3) adet</strong> (her biri 300 m² taban alanlı, 5'er katlı ve toplamda 1500 m² inşaat alanlı) iş yeri <strong>ZIMNİ ÜYELİKLERİNİN TESPİTİNE,</strong>
+                </li>
+                <li>
+                    Yargılama giderleri ve vekalet ücretinin HMK m. 323, 333 vd. gereğince davalı kooperatif üzerine <strong>YÜKLETİLMESİNE</strong>
+                </li>
+            </ol>
+
+             <p>karar verilmesini saygılarımla vekaleten arz ve talep ederim.</p>
+
+             <div class="signature-section">
+                08/04/2025<br><br>
+                Davacı Vekili<br>
+                Av. Bülent Mehmet HODUL<br>
+                (e-imzalıdır)
+            </div>
+
+
+            <div class="navigation-links">
+                 <a href="deliller_liste.html" class="btn btn-secondary">&laquo; Önceki Bölüm: Deliller Listesi</a>
+                 <a href="ekler_liste.html" class="btn">Sonraki Bölüm: Ekler Listesi &raquo;</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <p>&copy; 2025 İstinaf Dilekçesi Geliştirme Projesi.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

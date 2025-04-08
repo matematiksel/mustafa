@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bölüm 9: Deliller Listesi</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Bölüm sayfaları için ortak stiller */
+        .petition-section {
+            background-color: #fff;
+            padding: 40px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .petition-section h2 {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #343a40;
+        }
+        /* Delil listesi stili */
+        .evidence-list {
+            list-style-type: none; /* Numaralandırma için */
+            padding-left: 0;
+            counter-reset: evidence-counter; /* Sayaç başlat */
+        }
+        .evidence-list li {
+            counter-increment: evidence-counter; /* Sayacı artır */
+            margin-bottom: 12px;
+            padding-left: 40px; /* İçerik için sol boşluk */
+            position: relative; /* Numara için konumlandırma */
+            text-align: justify;
+        }
+        .evidence-list li::before {
+            content: counter(evidence-counter) "."; /* Sayacı göster */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            color: #0056b3;
+            width: 30px; /* Numara alanı genişliği */
+            text-align: right;
+            padding-right: 10px;
+        }
+         .evidence-list cite { /* Ek numarası */
+             font-weight: bold;
+             font-style: normal;
+         }
+
+        .navigation-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navigation-links a {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index2.html" class="logo">Dilekçe Geliştirme</a>
+            <ul class="nav-links">
+                 <li><a href="../index2.html#giris">Giriş</a></li>
+                 <li><a href="../index2.html#zorluklar">Zorluklar</a></li>
+                 <li><a href="../index2.html#amacimiz">Amacımız</a></li>
+                 <li><a href="../index2.html#ana-odak">Ana Odak</a></li>
+                 <li><a href="../index2.html#referans-metin">Referans Metin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 80px;"> <article class="petition-section">
+            <h2>9. DELİLLER LİSTESİ</h2>
+
+            <p>İstinaf nedenlerimizi ve taleplerimizi destekleyen delillerimiz şunlardır:</p>
+
+            <ol class="evidence-list">
+                <li>Kayseri 1. Asliye Ticaret Mahkemesi 2024/405 E. sayılı dosyası (Tüm içeriği ile celbi talep olunur)</li>
+                <li>Kayseri Cumhuriyet Başsavcılığı 2024/62293 sayılı soruşturma dosyası (Gerektiğinde bilgi ve belgelerin celbi talep olunur)</li>
+                <li>Banka Ödeme Dekontları <cite>(Ek-1)</cite></li>
+                <li>Banka Ödeme Dökümleri (Toplam 2.531.934,78 TL ödemeyi gösterir) <cite>(Ek-2)</cite></li>
+                <li>İzzet Altınhan'a ait Ödeme Dökümü (Karşılaştırma için) <cite>(Ek-3)</cite></li>
+                <li>SMS (Kısa Mesaj) Dökümleri (Davalı kooperatifin "Sayın üyemiz" hitaplı mesajları) <cite>(Ek-4)</cite></li>
+                <li>Kooperatif Üye Pay Listesi (Diğer üyelerin birden fazla paya sahip olduğunu gösterir) <cite>(Ek-5)</cite></li>
+                <li>Ödeme ve Karşılaştırma Tablosu <cite>(Ek-6)</cite></li>
+                <li>Altın Cinsinden Kayıp Hesaplama Tablosu <cite>(Ek-7)</cite></li>
+                <li>Kiralık Emlak İlanları (Emsal Kira Bedelleri) <cite>(Ek-8)</cite></li>
+                <li>Satılık Emlak İlanları (Piyasa Değeri, Arsa Satışı ve İnşaat Durumuna İlişkin) <cite>(Ek-9)</cite></li>
+                <li>Karşılaştırmalı Analiz Tablosu <cite>(Ek-10)</cite></li>
+                <li>Bilirkişi Kurulu Raporu (İlk Derece Mahkemesi Dosyasında Mevcut) <cite>(Ek-11)</cite></li>
+                <li>Kayseri 1. Asliye Ticaret Mahkemesi 2024/405 E., 2025/164 K. Sayılı Gerekçeli Kararı <cite>(Ek-18)</cite></li>
+                <li>Yargıtay 6. Hukuk Dairesi Emsal Kararı ( Aynı Kooperatif Aynı Üyelik Davası - 2022/3044 E ., 2023/3180 K.) <cite>(Ek-13)</cite></li>
+                <li>Ankara Bölge Adliye Mahkemesi Emsal Kararı (Ankara BAM 23.H.D., 2023/1742 E., 2024/976 K.) <cite>(Ek-15)</cite></li>
+                <li>Ödemelerin Yİ-ÜFE'ye Göre Bugünkü Değerini Gösterir Tablo <cite>(Ek-16)</cite></li>
+                <li>Ödemelerin Resmi Enflasyona Göre Bugünkü Değerini Gösterir Tablo <cite>(Ek-17)</cite></li>
+                <li>Kayseri Cumhuriyet Başsavcılığı’na Yapılan Ek Suç Duyurusu <cite>(Ek-14)</cite> (Destekleyici delil olarak)</li>
+                <li>Gazeteci Recep Bulut, Nuh Mehmet Yakuter, Mustafa Gürbüz’ün kooperatifle ilgili yazıları ve TV haberleri (İlgili içeriklerin dosyaya sunulması veya celbi talep olunur)</li>
+                <li>Gerekmesi halinde tanık beyanları, keşif, yeniden bilirkişi incelemesi ve her türlü yasal delil.</li>
+            </ol>
+
+
+            <div class="navigation-links">
+                 <a href="hukuki_dayanaklar_detay.html" class="btn btn-secondary">&laquo; Önceki Bölüm: Hukuki Dayanaklar</a>
+                 <a href="sonuc_talep.html" class="btn">Sonraki Bölüm: Sonuç ve Talep &raquo;</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <p>&copy; 2025 İstinaf Dilekçesi Geliştirme Projesi.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

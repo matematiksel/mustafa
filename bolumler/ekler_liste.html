@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bölüm 11: Ekler Listesi</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        /* Bölüm sayfaları için ortak stiller */
+        .petition-section {
+            background-color: #fff;
+            padding: 40px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .petition-section h2 {
+            margin-bottom: 25px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            color: #343a40;
+        }
+        /* Ekler listesi stili (Deliller listesi stiline benzer) */
+        .appendix-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .appendix-list li {
+            margin-bottom: 12px;
+            padding-left: 50px; /* Ek No için daha fazla yer */
+            position: relative;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        .appendix-list li::before {
+            content: attr(data-ek-no); /* Ek Numarasını göster */
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+            color: #0056b3;
+            width: 40px; /* Genişlik */
+            text-align: right;
+            padding-right: 10px;
+        }
+
+        .navigation-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between; /* Önceki ve Ana Sayfa linkleri */
+            align-items: center;
+        }
+        .navigation-links a {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index2.html" class="logo">Dilekçe Geliştirme</a>
+            <ul class="nav-links">
+                 <li><a href="../index2.html#giris">Giriş</a></li>
+                 <li><a href="../index2.html#zorluklar">Zorluklar</a></li>
+                 <li><a href="../index2.html#amacimiz">Amacımız</a></li>
+                 <li><a href="../index2.html#ana-odak">Ana Odak</a></li>
+                 <li><a href="../index2.html#referans-metin">Referans Metin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 80px;"> <article class="petition-section">
+            <h2>11. EKLER LİSTESİ (Toplu Referans)</h2>
+
+            <p>İstinaf dilekçemizde atıfta bulunulan ve iddialarımızı destekleyen ek belgeler aşağıda listelenmiştir:</p>
+
+            <ul class="appendix-list">
+                <li data-ek-no="Ek-1:">Banka Ödeme Dekontları</li>
+                <li data-ek-no="Ek-2:">Banka Ödeme Dökümleri (Toplam 2.531.934,78 TL ödemeyi gösterir)</li>
+                <li data-ek-no="Ek-3:">İzzet Altınhan'a ait Ödeme Dökümü (Karşılaştırma için)</li>
+                <li data-ek-no="Ek-4:">SMS (Kısa Mesaj) Dökümleri (Davalı kooperatifin "Sayın üyemiz" hitaplı mesajları)</li>
+                <li data-ek-no="Ek-5:">Kooperatif Üye Pay Listesi (Diğer üyelerin birden fazla paya sahip olduğunu gösterir)</li>
+                <li data-ek-no="Ek-6:">Ödeme ve Karşılaştırma Tablosu</li>
+                <li data-ek-no="Ek-7:">Altın Cinsinden Kayıp Hesaplama Tablosu</li>
+                <li data-ek-no="Ek-8:">Kiralık Emlak İlanları (Emsal Kira Bedelleri)</li>
+                <li data-ek-no="Ek-9:">Satılık Emlak İlanları (Piyasa Değeri, Arsa Satışı ve İnşaat Durumuna İlişkin)</li>
+                <li data-ek-no="Ek-10:">Karşılaştırmalı Analiz Tablosu</li>
+                <li data-ek-no="Ek-11:">Bilirkişi Kurulu Raporu (İlk Derece Mahkemesi Dosyasında Mevcut)</li>
+                <li data-ek-no="Ek-13:">Yargıtay 6. Hukuk Dairesi Emsal Kararı (Aynı Kooperatif Aynı Üyelik Davası - 2022/3044 E., 2023/3180 K.)</li>
+                <li data-ek-no="Ek-14:">Kayseri Cumhuriyet Başsavcılığı’na Yapılan Ek Suç Duyurusu (Destekleyici delil olarak)</li>
+                <li data-ek-no="Ek-15:">Ankara Bölge Adliye Mahkemesi Emsal Kararı (Ankara BAM 23.H.D., 2023/1742 E., 2024/976 K.)</li>
+                <li data-ek-no="Ek-16:">Ödemelerin Yİ-ÜFE'ye Göre Bugünkü Değerini Gösterir Tablo</li>
+                <li data-ek-no="Ek-17:">Ödemelerin Resmi Enflasyona Göre Bugünkü Değerini Gösterir Tablo</li>
+                <li data-ek-no="Ek-18:">Kayseri 1. Asliye Ticaret Mahkemesi 2024/405 E., 2025/164 K. Sayılı Gerekçeli Kararı</li>
+                </ul>
+
+
+            <div class="navigation-links">
+                 <a href="sonuc_talep.html" class="btn btn-secondary">&laquo; Önceki Bölüm: Sonuç ve Talep</a>
+                 <a href="../index2.html" class="btn">Ana Sayfaya Dön</a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="footer" style="margin-top: 60px;">
+        <div class="container">
+            <p>&copy; 2025 İstinaf Dilekçesi Geliştirme Projesi.</p>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
