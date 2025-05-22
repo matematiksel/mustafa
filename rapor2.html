@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Türkiye Kooperatif Sektörü İnfografik Analizi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #E0F2FE; /* Light Blue from Brilliant Blues as page background */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Max width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px; /* Max height to prevent overflow */
+        }
+        @media (min-width: 640px) { /* sm */
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .chart-container {
+                height: 400px;
+                max-height: 450px;
+            }
+        }
+        .stat-card {
+            background-color: #0077B6; /* Dark Blue */
+            color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        .section-title {
+            color: #005A8D; /* Darker shade for titles */
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem; /* p-6 */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        /* Custom scrollbar for better aesthetics (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #CAF0F8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0077B6;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #005A8D;
+        }
+    </style>
+    <!--
+    NARRATIVE PLAN & STRUCTURE:
+    1.  **Giriş (Introduction):** Türkiye'de kooperatifçiliğin genel durumu, raporun amacı ve önemi. Kilit sayılarla dikkat çekilecek (toplam kooperatif, ortak sayısı).
+    2.  **Kooperatif İstatistikleri (Cooperative Statistics):** Türkiye'deki kooperatif türlerinin bakanlıklara göre dağılımı (sayı ve ortak bazında). İş yeri odaklı kooperatiflere (KSSYK, TİYKO) vurgu.
+    3.  **Tamamlanma Süreleri: Vaka Analizleri (Completion Times: Case Studies):**
+        * EGE KOOP Projeleri: Konut ve karma kullanım projelerinden örnekler, tamamlanma süreleri ve üretilen birim sayıları.
+        * Küçük Sanayi Sitesi (KSS) Projeleri: KÜSGET, OSTİM gibi büyük KSS'lerin ve daha yeni girişimlerin tamamlanma süreleri ve iş yeri kapasiteleri. **EKLENEN VURGU: Aşırı uzun sürelerin (örn: 11 yıl) olumsuz etkileri ve üye mağduriyetleri (Mustafa Etçioğlu örneği).**
+    4.  **Süreleri Etkileyen Faktörler (Factors Affecting Completion Times):** Finansman, yönetim, mevzuat/bürokrasi, dış etkenler ve arsa/altyapı sorunları başlıkları altında temel etkenler. **EKLENEN VURGU: Bu faktörlerin kötü yönetiminin aşırı gecikmelere (örn: 11 yıl) ve üye mağduriyetlerine (Mustafa Etçioğlu örneği) yol açması.**
+    5.  **Temel Sorun Alanları (TÜKOSEP) (Key Problem Areas - TÜKOSEP):** Türkiye Kooperatifçilik Stratejisi ve Eylem Planı'nda belirtilen ana sorunlar.
+    6.  **Sonuç ve Öne Çıkanlar (Conclusion & Highlights):** Raporun temel bulguları, genel tamamlanma süresi aralıkları ve iş yeri sayılarına dair özet. **EKLENEN VURGU: 11 yıl gibi aşırı sürelerin kabul edilemezliği ve Mustafa Etçioğlu gibi üyelerin uğradığı zararlar.**
+
+    CHOSEN COLOR PALETTE: Brilliant Blues
+    Primary: #0077B6 (Dark Blue)
+    Secondary: #00B4D8 (Medium Blue)
+    Accent Light: #90E0EF (Light Blue)
+    Background/Page: #E0F2FE (Very Light Blue - adjusted from #CAF0F8 for better contrast with white cards)
+    Card Background: #FFFFFF (White)
+    Text: #1F2937 (Tailwind gray-800), #FFFFFF (White for dark backgrounds)
+    Emphasis Text Color: #005A8D (Darker shade from palette)
+
+    VISUALIZATION CHOICES: (Unchanged from previous version)
+    * **Giriş - Toplam Kooperatif Sayısı:** Goal: Inform. Type: Single Big Number. Justification: Vurgulayıcı tek bir veri. Method: Styled HTML text. (NO SVG)
+    * **Giriş - Toplam Ortak Sayısı:** Goal: Inform. Type: Single Big Number. Justification: Vurgulayıcı tek bir veri. Method: Styled HTML text. (NO SVG)
+    * **Kooperatif Sayıları (Bakanlıklara Göre):** Goal: Compare. Type: Bar Chart. Justification: Kategorik karşılaştırma için ideal. Library: Chart.js (Canvas). (NO SVG)
+    * **Ortak Sayıları (Bakanlıklara Göre):** Goal: Compare. Type: Bar Chart. Justification: Kategorik karşılaştırma için ideal. Library: Chart.js (Canvas). (NO SVG)
+    * **İş Yeri Odaklı Kooperatifler (KSSYK/TİYKO vs Diğer ÇŞB):** Goal: Compare (Composition). Type: Donut Chart. Justification: Bir bütünün parçalarını göstermek için uygun. Library: Chart.js (Canvas). (NO SVG)
+    * **EGE KOOP Proje Süreleri:** Goal: Compare/Change. Type: Horizontal Bar Chart. Justification: Farklı projelerin sürelerini net karşılaştırır. Library: Chart.js (Canvas). (NO SVG)
+    * **EGE KOOP Birim Sayıları:** Goal: Compare. Type: Bar Chart. Justification: Projelerin çıktılarını karşılaştırır. Library: Chart.js (Canvas). (NO SVG)
+    * **KSS Proje Süreleri:** Goal: Compare/Change. Type: Horizontal Bar Chart. Justification: Farklı KSS'lerin sürelerini karşılaştırır. Library: Chart.js (Canvas). (NO SVG)
+    * **KSS İş Yeri Sayıları:** Goal: Compare. Type: Bar Chart. Justification: KSS'lerin kapasitelerini gösterir. Library: Chart.js (Canvas). (NO SVG)
+    * **Tamamlanma Sürelerini Etkileyen Faktörler:** Goal: Organize. Type: Styled List. Justification: Faktörleri net ve organize sunar. Method: HTML/CSS with Tailwind, Unicode icons. (NO SVG)
+    * **Temel Sorun Alanları (TÜKOSEP):** Goal: Organize. Type: Styled List. Justification: Sorunları kategorize eder. Method: HTML/CSS with Tailwind, Unicode icons. (NO SVG)
+    * **Sonuç - EGE KOOP Süre Aralığı:** Goal: Inform. Type: Text/Big Number. Justification: Önemli bir bulguyu özetler. Method: Styled HTML text. (NO SVG)
+    * **Sonuç - KSS Süre Aralığı:** Goal: Inform. Type: Text/Big Number. Justification: Önemli bir bulguyu özetler. Method: Styled HTML text. (NO SVG)
+
+    CONFIRMATION: NEITHER MERMAID JS NOR SVG were used anywhere in this output. All charts are rendered to Canvas using Chart.js. Diagrams/Lists are structured HTML/CSS with Tailwind.
+    -->
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-[#0077B6] text-white py-8 shadow-lg">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl font-bold">Türkiye'de Kooperatif Projelerinin Tamamlanma Süreleri ve İş Yeri Kapasiteleri</h1>
+            <p class="mt-2 text-lg text-[#CAF0F8]">Kapsamlı Bir İnfografik Analiz</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section id="giris" class="mb-12">
+            <div class="card">
+                <h2 class="text-3xl font-semibold mb-4 text-center section-title">1. Giriş: Türkiye'de Kooperatifçiliğe Genel Bakış</h2>
+                <p class="text-lg mb-6 text-gray-700">
+                    Kooperatifler, Türkiye ekonomisinde özellikle tarım, konut ve esnaf sektörlerinde önemli bir yere sahiptir. Bu infografik, kooperatif projelerinin, özellikle iş yeri oluşturmaya yönelik olanların genel tamamlanma sürelerini, ortaya çıkan iş yeri sayılarını ve bu süreçleri etkileyen faktörleri somut verilere dayanarak analiz etmektedir. Rapor, mevcut veri eksikliği ışığında bu alandaki bilgi boşluğunu doldurmayı ve Kooperatif Bilgi Sistemi (KOOPBİS) gibi daha kapsamlı veri toplama mekanizmalarının gerekliliğini vurgulamayı amaçlamaktadır.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="stat-card">
+                        <div class="stat-number">84.232</div>
+                        <div class="stat-label">Toplam Kooperatif Sayısı (2015 İtibarıyla)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">8.1 Milyon+</div>
+                        <div class="stat-label">Toplam Ortak Sayısı (2015 İtibarıyla)</div>
+                    </div>
+                </div>
+                <p class="text-md text-gray-600">
+                    İş yeri odaklı kooperatifler, KOBİ'lerin gelişimi, yeni istihdam alanlarının yaratılması ve yerel ekonomik kalkınmanın sağlanmasında kritik bir rol oynar. OSTİM ve İkitelli OSB gibi başarılı örnekler, bu modelin dönüştürücü potansiyelini göstermektedir.
+                </p>
+            </div>
+        </section>
+
+        <section id="istatistikler" class="mb-12">
+            <div class="card">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">2. Türkiye'de Kooperatiflerin İstatistiksel Görünümü</h2>
+                <p class="text-lg mb-6 text-gray-700">
+                    Türkiye'deki kooperatifler, faaliyet alanlarına göre farklı bakanlıkların sorumluluğundadır. Aşağıdaki grafikler, 2015 yılı verilerine göre kooperatiflerin bakanlıklara göre sayısal dağılımını ve iş yeri oluşturan kooperatif türlerinin genel içindeki payını göstermektedir.
+                </p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">Kooperatif Sayıları (Bakanlıklara Göre)</h3>
+                        <div class="chart-container">
+                            <canvas id="kooperatifSayilariChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: Ticaret Bakanlığı (2015 verileri), Rapor Tablo 1.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">Ortak Sayıları (Bakanlıklara Göre)</h3>
+                        <div class="chart-container">
+                            <canvas id="ortakSayilariChart"></canvas>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: Ticaret Bakanlığı (2015 verileri), Rapor Tablo 1.</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">İş Yeri Odaklı Kooperatifler (ÇŞB Bünyesinde)</h3>
+                     <p class="text-md text-gray-700 mb-4 text-center">
+                        Çevre, Şehircilik ve İklim Değişikliği Bakanlığı bünyesindeki kooperatifler arasında Küçük Sanayi Sitesi Yapı Kooperatifleri (KSSYK) ve Toplu İşyeri Yapı Kooperatifleri (TİYKO) doğrudan iş yeri üretimine odaklanmaktadır.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+                        <div class="md:col-span-1 text-center p-4 bg-[#E0F2FE] rounded-lg">
+                             <p class="text-4xl font-bold text-[#0077B6]">1.052</p>
+                             <p class="text-gray-700">KSSYK Sayısı</p>
+                             <p class="text-sm text-gray-600">(127.098 Ortak)</p>
+                        </div>
+                        <div class="md:col-span-1 text-center p-4 bg-[#E0F2FE] rounded-lg">
+                             <p class="text-4xl font-bold text-[#0077B6]">1.810</p>
+                             <p class="text-gray-700">TİYKO Sayısı</p>
+                             <p class="text-sm text-gray-600">(103.536 Ortak)</p>
+                        </div>
+                        <div class="md:col-span-1 chart-container mx-auto" style="height: 250px; max-height: 250px;">
+                            <canvas id="isYeriKooperatifOranChart"></canvas>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: Ticaret Bakanlığı (2015 verileri), Rapor Bölüm 2.2.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="vaka-analizleri" class="mb-12">
+            <div class="card">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">3. Tamamlanma Süreleri ve İş Yeri Sayıları: Vaka Analizleri</h2>
+                <p class="text-lg mb-6 text-gray-700">
+                    Türkiye'de kooperatif projelerinin genel ortalama tamamlanma sürelerine dair toplu bir istatistik bulunmamaktadır. Bu bölümde, EGE KOOP gibi büyük konut/karma kullanım projeleri ile Küçük Sanayi Sitesi (KSS) projelerinden örneklerle tamamlanma süreleri ve oluşturulan birim/iş yeri sayıları incelenmektedir. "Tamamlanma süresi", projenin başlangıcından fiili bitişine kadar geçen zamanı ifade eder.
+                </p>
+
+                <div class="mb-10">
+                    <h3 class="text-2xl font-semibold mb-4 text-[#0077B6]">3.1. EGE KOOP Projeleri (Konut ve Karma Kullanım)</h3>
+                    <p class="text-md text-gray-700 mb-4">
+                        EGE KOOP projelerinde tamamlanma süreleri 2 ila 9 yıl arasında değişmektedir. Proje ölçeği ile süre arasında her zaman doğrudan bir korelasyon yoktur; projenin karmaşıklığı, finansman, arsa ve yönetim gibi faktörler de etkilidir.
+                    </p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">EGE KOOP Proje Süreleri (Yıl)</h4>
+                            <div class="chart-container" style="height: 450px; max-height:500px;"> <canvas id="egeKoopSureChart"></canvas> </div>
+                            <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: EGE KOOP, Rapor Tablo 2.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">EGE KOOP Proje Birim Sayıları</h4>
+                            <div class="chart-container" style="height: 450px; max-height:500px;"> <canvas id="egeKoopBirimChart"></canvas> </div>
+                            <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: EGE KOOP, Rapor Tablo 2.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4 text-[#0077B6]">3.2. Küçük Sanayi Sitesi (KSS) Projeleri</h3>
+                     <p class="text-md text-gray-700 mb-4">
+                        KSS projeleri, ölçekleri ve karmaşıklıkları nedeniyle genellikle daha uzun tamamlanma sürelerine sahiptir. Gaziantep KÜSGET gibi büyük projeler 8-9 yıl sürebilirken, OSTİM gibi yapılar on yıllara yayılan fazlar halinde gelişmiştir. Yeni nesil KSS projeleri ise daha kısa tamamlama hedefleri sunabilmektedir.
+                    </p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">Seçilmiş KSS Proje Süreleri (Yaklaşık Yıl)</h4>
+                            <div class="chart-container"> <canvas id="kssSureChart"></canvas> </div>
+                            <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: Çeşitli Kaynaklar, Rapor Tablo 3.</p>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold mb-3 text-center text-[#0077B6]">Seçilmiş KSS İş Yeri Sayıları (Yaklaşık)</h4>
+                            <div class="chart-container"> <canvas id="kssIsyeriChart"></canvas> </div>
+                            <p class="text-sm text-gray-600 mt-2 text-center">Kaynak: Çeşitli Kaynaklar, Rapor Tablo 3.</p>
+                        </div>
+                    </div>
+                     <p class="text-md text-gray-700 mt-6">
+                        KSS ve OSB projelerinde "tamamlanma" kavramı katmanlıdır. Fiziksel inşaatın bitmesi, altyapının tamamlanması ve iş yerlerinin tam kapasiteyle faaliyete geçmesi farklı aşamalardır. Örneğin İkitelli OSB için "%90 bitmiş, %65 faaliyette" ifadesi bu durumu özetler.
+                    </p>
+                    <p class="text-md text-gray-700 mt-4 font-semibold text-[#005A8D]">
+                        Raporda belirtilen KSS projelerinin dahi 8-10 yıla varan veya aşan (OSTİM, İkitelli gibi çok fazlı yapılar) tamamlanma süreçleri göz önüne alındığında, bir projenin <strong class="text-[#005A8D]">11 yıl gibi bir süreyi aşması</strong>, özellikle de belirsizliklerle dolu bir şekilde uzaması, kooperatif ortakları için ciddi sorunlara işaret edebilir. Bu tür aşırı gecikmeler, <strong class="text-[#005A8D]">Mustafa Etçioğlu</strong> gibi üyelerin ek maliyetlerle karşılaşmasına, yatırım planlarının altüst olmasına ve kooperatife olan güvenlerinin sarsılmasına neden olabilir.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="faktorler-sorunlar" class="mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="card">
+                    <h2 class="text-2xl font-semibold mb-4 text-center section-title">4. Proje Tamamlanma Sürelerini Etkileyen Faktörler</h2>
+                    <p class="text-md text-gray-700 mb-6">Kooperatif projelerinin zamanında tamamlanması birçok faktöre bağlıdır. Temel etkenler şunlardır:</p>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start"><span class="text-[#0077B6] mr-2 text-xl">💰</span> <strong>Finansman ve Sermaye Yapısı:</strong> Ortak ödemelerindeki düzensizlikler, kredi erişim zorlukları.</li>
+                        <li class="flex items-start"><span class="text-[#0077B6] mr-2 text-xl">👥</span> <strong>Yönetimsel ve Kurumsal Kapasite:</strong> Yönetici yetkinliği, profesyonellik eksikliği, denetim zafiyetleri.</li>
+                        <li class="flex items-start"><span class="text-[#0077B6] mr-2 text-xl">📜</span> <strong>Mevzuat, Bürokrasi ve İzin Süreçleri:</strong> Dağınık mevzuat, yavaş bürokrasi, uzun izin süreçleri.</li>
+                        <li class="flex items-start"><span class="text-[#0077B6] mr-2 text-xl">🌍</span> <strong>Dış Etkenler ve Piyasa Koşulları:</strong> Ekonomik krizler, enflasyon, malzeme tedarik sorunları, mücbir sebepler.</li>
+                        <li class="flex items-start"><span class="text-[#0077B6] mr-2 text-xl">🏗️</span> <strong>Arsa Temini ve Altyapı Sorunları:</strong> Uygun arsa bulma zorluğu, altyapı hizmetlerinin gecikmesi.</li>
+                    </ul>
+                    <p class="text-sm text-gray-600 mt-4">Detaylar için Rapor Bölüm 4'e bakınız.</p>
+                    <p class="text-md text-gray-700 mt-6 font-semibold text-[#005A8D]">
+                        Bu faktörlerin etkin bir şekilde yönetilememesi durumunda, projelerin <strong class="text-[#005A8D]">11 yıl gibi makul kabul edilemeyecek sürelere</strong> uzaması, başlangıç maliyetlerinin katlanarak artması ve <strong class="text-[#005A8D]">Mustafa Etçioğlu</strong> gibi kooperatif üyelerinin yıllarca süren belirsizlikler ve beklenmedik ek ödemeler sarmalında mağdur olması gibi son derece olumsuz tablolar ortaya çıkabilmektedir. Bu durum, kooperatif yönetimlerinin şeffaflık, hesap verebilirlik ve profesyonellik ilkelerinden ne kadar uzaklaştığının da bir göstergesi olabilir.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-2xl font-semibold mb-4 text-center section-title">5. Temel Sorun Alanları (TÜKOSEP Bulguları)</h2>
+                    <p class="text-md text-gray-700 mb-6">Türkiye Kooperatifçilik Stratejisi ve Eylem Planı (TÜKOSEP, 2012-2016) kooperatifçiliğin temel sorunlarını şöyle sıralamıştır:</p>
+                    <ul class="space-y-2 text-gray-700 text-sm">
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Kamu hizmet sunumu ve elverişli ortam eksikliği.</li>
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Eğitim, bilinçlendirme ve araştırma yetersizlikleri.</li>
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Örgütlenme ve işbirliği sorunları.</li>
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Sermaye yetersizliği ve finansmana erişim güçlüğü.</li>
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Denetim ve imaj sorunu.</li>
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Kurumsal ve profesyonel yönetim eksikliği.</li>
+                        <li class="flex items-start"><span class="text-[#00B4D8] mr-2">●</span> Mevzuat ve uygulama sorunları.</li>
+                    </ul>
+                     <p class="text-sm text-gray-600 mt-4">Bu sorunlar birbirini tetikleyerek proje sürelerinde sapmalara yol açar. Detaylar için Rapor Bölüm 5.1'e bakınız.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sonuc" class="mb-12">
+            <div class="card">
+                <h2 class="text-3xl font-semibold mb-6 text-center section-title">6. Sonuç ve Öne Çıkan Bulgular</h2>
+                <p class="text-lg mb-6 text-gray-700">
+                    Rapor analizleri, Türkiye'deki kooperatif projelerinin tamamlanma sürelerinin büyük değişkenlik gösterdiğini ortaya koymaktadır. Kesin bir ortalama süre vermek mümkün olmasa da, vaka analizleri önemli ipuçları sunmaktadır:
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <div class="stat-card bg-[#00B4D8]">
+                        <div class="stat-number">2-9 Yıl</div>
+                        <div class="stat-label">EGE KOOP Projeleri Tamamlanma Süre Aralığı</div>
+                    </div>
+                    <div class="stat-card bg-[#00B4D8]">
+                        <div class="stat-number">8-10+ Yıl</div>
+                        <div class="stat-label">Büyük KSS Projeleri Tamamlanma Süre Aralığı (İlk Etap - Tam Faaliyet)</div>
+                    </div>
+                </div>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 mb-6">
+                    <li>İş yeri sayıları, EGE KOOP'un karma projelerinde yüzlerden, KÜSGET gibi KSS'lerde binlere, İkitelli OSB gibi dev yapılarda on binlere ulaşabilmektedir.</li>
+                    <li>Tamamlanma sürelerini; finansman, yönetim kalitesi, bürokrasi, arsa/altyapı ve dış etkenler gibi birçok faktör etkilemektedir.</li>
+                    <li>"Tamamlanma" kavramı katmanlıdır: Fiziksel inşaat bitişi, iskân alımı, ferdileşme ve tam faaliyete geçiş farklı aşamalardır.</li>
+                </ul>
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-[#0077B6]">Uzun Süren Projelerin Ortaklar Üzerindeki Etkisi:</h3>
+                <p class="text-md text-gray-700 font-semibold text-[#005A8D]">
+                    Vaka analizleri ve etkileyen faktörler ışığında, bir kooperatif projesinin, özellikle de bir işyeri projesinin <strong class="text-[#005A8D]">11 yıl gibi bir sürede tamamlanamamış olması</strong>, üyeler açısından kabul edilebilir bir durum olmaktan uzaktır. Bu denli uzun bir süreç, ortakların başlangıçta taahhüt ettikleri maliyetlerin çok üzerine çıkılmasına, yıllarca atıl kalan bir yatırıma ve dolayısıyla <strong class="text-[#005A8D]">Mustafa Etçioğlu</strong> gibi üyelerin ciddi ekonomik zarara uğramasına yol açtığının güçlü bir göstergesidir. Sürecin bu kadar uzaması, genellikle raporda da değinilen yönetimsel zafiyetler, finansman sorunları ve denetim eksiklikleri gibi temel problemlerin bir sonucudur ve kooperatifçiliğin ruhuna aykırıdır.
+                </p>
+                <h3 class="text-xl font-semibold mb-3 mt-6 text-[#0077B6]">Öneriler:</h3>
+                <p class="text-md text-gray-700">
+                    Proje sürelerinin iyileştirilmesi için veri toplama sistemlerinin güçlendirilmesi, finansmana erişimin kolaylaştırılması, yönetim kapasitesinin artırılması, mevzuatın sadeleştirilmesi ve iyi uygulama örneklerinin yaygınlaştırılması kritik öneme sahiptir.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#005A8D] text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; <span id="currentYear"></span> Kooperatif Sektörü İnfografik Analizi. Veriler "Türkiye'de Kooperatif Projelerinin Tamamlanma Süreleri ve İş Yeri Kapasiteleri Üzerine Bir Değerlendirme" raporundan derlenmiştir.</p>
+            <p class="text-xs mt-1">Bu infografik, eğitim ve bilgilendirme amacıyla oluşturulmuştur.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        function wrapLabel(str, maxWidth) {
+            if (!str) return '';
+            if (str.length <= maxWidth) {
+                return str;
+            }
+            const words = str.split(' ');
+            let currentLine = '';
+            const lines = [];
+            for (let i = 0; i < words.length; i++) {
+                const word = words[i];
+                if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            if (currentLine.trim().length > 0) {
+                 lines.push(currentLine.trim());
+            }
+            return lines.length > 0 ? lines : [str]; 
+        }
+        
+        const defaultTooltipCallbacks = {
+            title: function(tooltipItems) {
+                const item = tooltipItems[0];
+                if (!item || !item.chart || !item.chart.data || !item.chart.data.labels) return '';
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(' ');
+                } else {
+                  return label;
+                }
+            }
+        };
+
+        const brilliantBluesPalette = ['#0077B6', '#00B4D8', '#90E0EF', '#48CAE4', '#ADE8F4'];
+
+        const kooperatifSayilariCtx = document.getElementById('kooperatifSayilariChart').getContext('2d');
+        new Chart(kooperatifSayilariCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('Gıda, Tarım ve Hayvancılık Bkn.', 20), 
+                    wrapLabel('Çevre ve Şehircilik Bkn.', 20), 
+                    wrapLabel('Ticaret Bakanlığı (Eski Gümrük ve Tic.)', 20)
+                ],
+                datasets: [{
+                    label: 'Kooperatif Sayısı',
+                    data: [12990, 57858, 13384],
+                    backgroundColor: brilliantBluesPalette[0],
+                    borderColor: brilliantBluesPalette[0],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, grace: '5%' } },
+                plugins: { tooltip: { callbacks: defaultTooltipCallbacks } }
+            }
+        });
+
+        const ortakSayilariCtx = document.getElementById('ortakSayilariChart').getContext('2d');
+        new Chart(ortakSayilariCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('Gıda, Tarım ve Hayvancılık Bkn.', 20), 
+                    wrapLabel('Çevre ve Şehircilik Bkn.', 20), 
+                    wrapLabel('Ticaret Bakanlığı (Eski Gümrük ve Tic.)', 20)
+                ],
+                datasets: [{
+                    label: 'Ortak Sayısı',
+                    data: [3890478, 2215710, 2003037],
+                    backgroundColor: brilliantBluesPalette[1],
+                    borderColor: brilliantBluesPalette[1],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, grace: '5%' } },
+                plugins: { tooltip: { callbacks: defaultTooltipCallbacks } }
+            }
+        });
+        
+        const isYeriKooperatifOranCtx = document.getElementById('isYeriKooperatifOranChart').getContext('2d');
+        new Chart(isYeriKooperatifOranCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['KSSYK', 'TİYKO', wrapLabel('Diğer (Çoğunlukla Konut Yapı)', 16)],
+                datasets: [{
+                    label: 'ÇŞB Kooperatif Dağılımı',
+                    data: [1052, 1810, 54996], 
+                    backgroundColor: [brilliantBluesPalette[0], brilliantBluesPalette[1], brilliantBluesPalette[2]],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { 
+                    tooltip: { callbacks: defaultTooltipCallbacks },
+                    legend: { position: 'bottom', labels: { boxWidth:12, font: {size: 10} } }
+                }
+            }
+        });
+
+        const egeKoopSureCtx = document.getElementById('egeKoopSureChart').getContext('2d');
+        new Chart(egeKoopSureCtx, {
+            type: 'bar', 
+            data: {
+                labels: [
+                    wrapLabel('EGEKENT-1 / ÇİĞLİ', 16), 
+                    wrapLabel('EGEKENT-2 / ULUKENT-MENEMEN', 16),
+                    wrapLabel('EGEKENT-3 / BUCA', 16),
+                    wrapLabel('VİLLAKENT / SEYREK-MENEMEN', 16),
+                    wrapLabel('EGEKENT-4 / AYRANCILAR-TORBALI', 16),
+                    wrapLabel('EGE KOOP KÖRFEZ EVLERİ', 16),
+                    wrapLabel('EGE KOOP GÜZELBAHÇE ÇELİK EVLERİ', 16),
+                    wrapLabel('EGE KOOP ALIŞVERİŞ MERKEZİ', 16),
+                    wrapLabel('EGE KOOP 25.YIL KONUTLARI', 16),
+                    wrapLabel('EGE KOOP DÖRT MEVSİM KONAKLARI', 16),
+                    wrapLabel('EGE KOOP KEYİFLİ YAŞAM EVLERİ', 16),
+                    wrapLabel('EGE KOOP GEDİZKENT-2 / MENEMEN', 16),
+                    wrapLabel('EGE KOOP İZMİR KÖRFEZİ EVLERİ', 16)
+                ],
+                datasets: [{
+                    label: 'Süre (Yıl)',
+                    data: [4, 3, 3, 9, 3, 2, 2, 2, 2, 2, 2, 6, 3],
+                    backgroundColor: brilliantBluesPalette[0],
+                }]
+            },
+            options: {
+                indexAxis: 'y', 
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { x: { beginAtZero: true, title: { display: true, text: 'Süre (Yıl)' } } },
+                plugins: { tooltip: { callbacks: defaultTooltipCallbacks }, legend: { display: false } }
+            }
+        });
+
+        const egeKoopBirimCtx = document.getElementById('egeKoopBirimChart').getContext('2d');
+        new Chart(egeKoopBirimCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('EGEKENT-1', 10), wrapLabel('EGEKENT-2', 10), wrapLabel('EGEKENT-3', 10), wrapLabel('VİLLAKENT', 10),
+                    wrapLabel('EGEKENT-4', 10), wrapLabel('KÖRFEZ EVLERİ', 10), wrapLabel('GÜZELBAHÇE', 10), wrapLabel('AVM', 10),
+                    wrapLabel('25.YIL KONUT.', 10), wrapLabel('DÖRT MEVSİM', 10), wrapLabel('KEYİFLİ YAŞAM', 10), wrapLabel('GEDİZKENT-2', 10),
+                    wrapLabel('İZMİR KÖRFEZİ', 10)
+                ],
+                datasets: [{
+                    label: 'Konut/İşyeri Sayısı',
+                    data: [9448, 1417, 4035, 2000, 1600, 703, 140, 62, 395, 141, 184, 190, 129],
+                    backgroundColor: brilliantBluesPalette[1],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Birim Sayısı' } } },
+                plugins: { tooltip: { callbacks: defaultTooltipCallbacks }, legend: { display: false } }
+            }
+        });
+        
+        const kssSureCtx = document.getElementById('kssSureChart').getContext('2d');
+        new Chart(kssSureCtx, {
+            type: 'bar', 
+            data: {
+                labels: [
+                    wrapLabel('Gaziantep KÜSGET (1. Kısım)', 16), 
+                    wrapLabel('Gaziantep KÜSGET (2. Kısım)', 16),
+                    wrapLabel('OSTİM (Ana Gelişim Fazı)', 16), 
+                    wrapLabel('İkitelli OSB (Genel Gelişim)', 16), 
+                    wrapLabel('İkitelli Silivri (Hedef)', 16)
+                ],
+                datasets: [{
+                    label: 'Süre (Yıl, Yaklaşık)',
+                    data: [8, 9, 10, 20, 2], 
+                    backgroundColor: brilliantBluesPalette[0],
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { x: { beginAtZero: true, title: { display: true, text: 'Süre (Yıl)' } } },
+                plugins: { tooltip: { callbacks: defaultTooltipCallbacks }, legend: { display: false } }
+            }
+        });
+
+        const kssIsyeriCtx = document.getElementById('kssIsyeriChart').getContext('2d');
+        new Chart(kssIsyeriCtx, {
+            type: 'bar',
+            data: {
+                labels: [
+                    wrapLabel('KÜSGET (1. Kısım)', 12), 
+                    wrapLabel('KÜSGET (2. Kısım)', 12),
+                    wrapLabel('OSTİM', 12),
+                    wrapLabel('İkitelli OSB', 12),
+                    wrapLabel('İznik KSS', 12)
+                ],
+                datasets: [{
+                    label: 'İş Yeri Sayısı (Yaklaşık)',
+                    data: [1251, 1251, 3900, 30000, 43], 
+                    backgroundColor: brilliantBluesPalette[1],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'İş Yeri Sayısı' } } },
+                plugins: { tooltip: { callbacks: defaultTooltipCallbacks }, legend: { display: false } }
+            }
+        });
+
+    </script>
+</body>
+</html>
